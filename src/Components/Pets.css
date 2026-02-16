@@ -1,0 +1,24 @@
+.pets-container {
+  display: flex;
+}
+
+.pets-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.pets-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.pets-table th, .pets-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.pets-table th {
+  background: #f4f4f4;
+}
