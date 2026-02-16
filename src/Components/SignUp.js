@@ -1,4 +1,3 @@
-// src/components/SignUp.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignUp.css';
@@ -8,7 +7,6 @@ function SignUp() {
     fullName: '',
     email: '',
     phone: '',
-    organization: '',
     password: '',
     confirmPassword: '',
     agree: false,
@@ -35,7 +33,7 @@ function SignUp() {
       return;
     }
     alert('Account created successfully (demo).');
-    navigate('/login'); // after register, go back to login
+    navigate('/dashboard');
   };
 
   return (
@@ -53,9 +51,6 @@ function SignUp() {
 
           <label>Phone Number</label>
           <input type="text" name="phone" placeholder="0912-345-6789" value={formData.phone} onChange={handleChange} />
-
-          <label>Organization (Optional)</label>
-          <input type="text" name="organization" placeholder="Your organization name" value={formData.organization} onChange={handleChange} />
 
           <label>Password</label>
           <input type="password" name="password" placeholder="Create a password" value={formData.password} onChange={handleChange} />

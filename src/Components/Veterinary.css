@@ -1,0 +1,24 @@
+.vet-container {
+  display: flex;
+}
+
+.vet-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.vet-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.vet-table th, .vet-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.vet-table th {
+  background: #f4f4f4;
+}

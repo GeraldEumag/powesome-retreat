@@ -1,0 +1,86 @@
+.landing-container {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #3498db;
+  padding: 15px 30px;
+  color: white;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Hero */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px;
+  background: #f0f8ff;
+}
+
+.hero-text {
+  max-width: 50%;
+}
+
+.hero-buttons button {
+  margin: 10px;
+  padding: 10px 20px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.hero-image img {
+  max-width: 400px;
+  border-radius: 10px;
+}
+
+/* Info Section */
+.info {
+  display: flex;
+  justify-content: space-around;
+  background: #f9f9f9;
+  padding: 30px;
+}
+
+.info-item h3 {
+  color: #3498db;
+  font-size: 24px;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  background: #2c3e50;
+  color: white;
+  padding: 20px 40px;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer a {
+  color: #ecf0f1;
+  text-decoration: none;
+}

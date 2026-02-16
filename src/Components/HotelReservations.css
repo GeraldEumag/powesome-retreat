@@ -1,0 +1,24 @@
+.hotel-container {
+  display: flex;
+}
+
+.hotel-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.hotel-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.hotel-table th, .hotel-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.hotel-table th {
+  background: #f4f4f4;
+}
