@@ -1,63 +1,113 @@
-// src/Components/PointOfSale.js
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import './PointOfSale.css';
 
-function PointOfSale() {
+function PointOfSale({ items, setItems }) {
   const [cart, setCart] = useState([]);
-  const [products] = useState([
-    { id: 1, name: 'Premium Dog Food', category: 'Food', price: 1200, stock: 45 },
-    { id: 2, name: 'Cat Litter', category: 'Accessories', price: 350, stock: 30 },
-    { id: 3, name: 'Flea & Tick Medication', category: 'Medicine', price: 450, stock: 20 },
-    { id: 4, name: 'Dog Shampoo', category: 'Grooming', price: 280, stock: 35 }
-  ]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
 
   const addToCart = (product) => {
-    setCart([...cart, product]);
+    const existing = cart.find(item => item.sku === product.sku);
+    if (existing) {
+      setCart(cart.map(item =>
+        item.sku === product.sku ? { ...item, quantity: item.quantity + 1 } : item
+      ));
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
   };
+
+  const removeFromCart = (sku) => {
+    setCart(cart.filter(item => item.sku !== sku));
+  };
+
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const tax = subtotal * 0.12;
+  const total = subtotal + tax;
+
+  const completeSale = () => {
+    const updatedItems = items.map(invItem => {
+      const cartItem = cart.find(c => c.sku === invItem.sku);
+      if (cartItem) {
+        return {
+          ...invItem,
+          stock: Math.max(invItem.stock - cartItem.quantity, 0)
+        };
+      }
+      return invItem;
+    });
+
+    setItems(updatedItems);
+    setCart([]);
+    alert('Sale completed and inventory updated!');
+  };
+
+  const filteredProducts = items.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = activeCategory === 'All' || product.category === activeCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="pos-container">
       <Sidebar />
       <div className="pos-content">
         <h1>Point of Sale</h1>
+        <p>Process sales and manage transactions</p>
 
-        {/* Product Filters */}
-        <div className="pos-filters">
-          <button>All</button>
-          <button>Food</button>
-          <button>Accessories</button>
-          <button>Medicine</button>
-          <button>Grooming</button>
+        <div className="filters">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <div className="category-buttons">
+            {['All', 'Food', 'Accessories', 'Medicine', 'Grooming'].map(cat => (
+              <button
+                key={cat}
+                className={activeCategory === cat ? 'active' : ''}
+                onClick={() => setActiveCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Product List */}
-        <div className="pos-products">
-          {products.map(prod => (
-            <div key={prod.id} className="pos-product">
-              <h3>{prod.name}</h3>
-              <p>Category: {prod.category}</p>
-              <p>Price: ₱{prod.price}</p>
-              <p>Stock: {prod.stock}</p>
-              <button onClick={() => addToCart(prod)}>Add to Cart</button>
-            </div>
-          ))}
-        </div>
+        <div className="pos-main">
+          <div className="product-list">
+            {filteredProducts.map(product => (
+              <div key={product.sku} className="product-card">
+                <h3>{product.name}</h3>
+                <p>{product.category}</p>
+                <p>₱{product.price}</p>
+                <p>Stock: {product.stock}</p>
+                <button onClick={() => addToCart(product)}>Add to Cart</button>
+              </div>
+            ))}
+          </div>
 
-        {/* Cart Section */}
-        <div className="pos-cart">
-          <h2>Cart ({cart.length} items)</h2>
-          {cart.length === 0 ? (
-            <p>Your cart is empty</p>
-          ) : (
-            <ul>
-              {cart.map((item, index) => (
-                <li key={index}>
-                  {item.name} - ₱{item.price}
-                </li>
-              ))}
-            </ul>
-          )}
+          <div className="cart-summary">
+            <h2>Cart</h2>
+            {cart.length === 0 ? (
+              <p>No items in cart</p>
+            ) : (
+              <ul>
+                {cart.map(item => (
+                  <li key={item.sku}>
+                    {item.name} ₱{item.price} (Qty: {item.quantity})
+                    <button className="remove-btn" onClick={() => removeFromCart(item.sku)}>Remove</button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p>Subtotal: ₱{subtotal.toFixed(2)}</p>
+            <p>Tax (12%): ₱{tax.toFixed(2)}</p>
+            <h3>Total: ₱{total.toFixed(2)}</h3>
+            <button className="complete-btn" onClick={completeSale}>Complete Sale</button>
+          </div>
         </div>
       </div>
     </div>

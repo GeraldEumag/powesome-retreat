@@ -1,36 +1,63 @@
 .user-container {
   display: flex;
-  min-height: 100vh;   /* ✅ ensures it fills the screen */
+  min-height: 100vh;
 }
 
 .user-content {
   flex: 1;
   padding: 20px;
-  display: flex;
-  flex-direction: column;  /* ✅ keeps content stacked neatly */
+  background: #fdfdfd;
+  overflow-y: auto;
 }
 
-.user-summary {
+.metrics {
   display: flex;
-  gap: 30px;
-  margin: 20px 0;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  flex: 1;
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  text-align: center;
   font-weight: bold;
 }
 
-.add-user-btn {
-  align-self: flex-start;  /* ✅ button stays at the top */
+.filters {
+  display: flex;
+  align-items: center;   /* ✅ align inputs and button */
+  gap: 10px;
   margin-bottom: 15px;
-  padding: 10px 15px;
-  background: #2ecc71;
+}
+
+.filters input, .filters select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filters .add-btn {
+  margin-left: auto;     /* ✅ push button to right */
+  margin-top: 11px;
+  margin-bottom: 11px;
+  padding: 9.5px 15px;
+  background: #3498db;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
+}
+.filters .add-btn:hover {
+  background: #2980b9;
 }
 
 .user-table {
-  width: 100%;
+  width: 100%;           /* ✅ fixed */
   border-collapse: collapse;
+  background: white;
 }
 
 .user-table th, .user-table td {
@@ -39,6 +66,81 @@
   text-align: left;
 }
 
-.user-table th {
-  background: #f4f4f4;
+.edit-btn, .delete-btn {
+  margin-right: 5px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.edit-btn {
+  background: #f1c40f;
+}
+.edit-btn:hover {
+  background: #d4ac0d;
+}
+
+.delete-btn {
+  background: #e74c3c;
+  color: white;
+}
+.delete-btn:hover {
+  background: #c0392b;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  width: 400px;
+}
+
+.modal form label {
+  display: block;
+  margin-top: 10px;
+}
+
+.modal form input, .modal form select {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-actions .cancel {
+  background: #e74c3c;
+  color: white;
+}
+.modal-actions .cancel:hover {
+  background: #c0392b;
 }
