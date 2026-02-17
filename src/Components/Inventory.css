@@ -1,0 +1,30 @@
+.inventory-container {
+  display: flex;
+}
+
+.inventory-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.inventory-summary {
+  display: flex;
+  gap: 30px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-table th, .inventory-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.inventory-table th {
+  background: #f4f4f4;
+}

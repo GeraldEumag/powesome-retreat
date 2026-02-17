@@ -6,3 +6,109 @@
   flex: 1;
   padding: 20px;
 }
+
+/* KPI Metrics */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.metric-card {
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.metric-card h3 {
+  margin-bottom: 10px;
+}
+
+/* Charts Section */
+.charts-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two equal columns */
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.chart-box {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 6px;
+  text-align: center;
+
+  height: auto;                   /* let content decide height */
+  min-height: 350px;              /* ensures readability */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.chart-wrapper {
+  width: 100%;
+  height: 300px;                  /* fixed chart height */
+  position: relative;
+}
+
+.chart-box canvas {
+  max-height: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Recent Activities */
+.activities-section {
+  margin: 30px 0;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.activities-section h3 {
+  margin-bottom: 10px;
+}
+
+.activities-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.activities-section li {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+/* Quick Actions */
+.quick-actions {
+  margin: 30px 0;
+}
+
+.quick-actions h3 {
+  margin-bottom: 10px;
+}
+
+.actions-grid {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.actions-grid button {
+  flex: 1;
+  padding: 12px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.actions-grid button:hover {
+  background: #2980b9;
+}

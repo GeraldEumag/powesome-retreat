@@ -7,6 +7,10 @@ import Dashboard from './Components/Dashboard';
 import Pets from './Components/Pets';
 import HotelReservations from './Components/HotelReservations';  // ✅ make sure file exists
 import Veterinary from './Components/Veterinary';
+import PointOfSale from './Components/PointOfSale';
+import Inventory from './Components/Inventory';
+import UserManagement from './Components/UserManagement';
+import Reports from './Components/Reports';
 
 
 function App() {
@@ -25,6 +29,11 @@ function App() {
         <Route path="/pets" element={<Pets />} />
         <Route path="/reservations" element={<HotelReservations />} />
         <Route path="/veterinary" element={<Veterinary />} />   {/* ✅ new route */}
+        <Route path="/pos" element={<PointOfSale />} />   {/* ✅ new route */}
+        <Route path="/inventory" element={<Inventory />} />   {/* ✅ new route */}
+        <Route path="/users" element={<UserManagement />} />   {/* ✅ new route */}
+        <Route path="/reports" element={<Reports />} />   {/* ✅ new route */}
+
         {/* Catch-all: redirect unknown routes to homepage */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
