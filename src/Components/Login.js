@@ -1,64 +1,85 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './Login.css';
 
 function Login() {
-  const [email, setEmail] = useState('admin@powesome.com');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    // Demo: accept any credentials
-    navigate('/dashboard');
-  };
 
-  const handleSignUp = () => {
-    navigate('/signup');
+    // ✅ Demo role logic
+    if (email === 'admin@powesome.com' && password === 'admin123') {
+      localStorage.setItem('userRole', 'admin');
+      if (rememberMe) localStorage.setItem('rememberMe', 'true');
+      alert('Logged in as Admin');
+      navigate('/dashboard');
+    } else {
+      localStorage.setItem('userRole', 'customer');
+      if (rememberMe) localStorage.setItem('rememberMe', 'true');
+      alert('Logged in as Customer');
+      navigate('/');
+    }
   };
 
   return (
     <div className="login-container">
-      <div className="login-box">
-        <h1>Powesome Retreat</h1>
-        <h2>Management Information System</h2>
+      <h2>Pawesome Retreat</h2>
+      <p>Management Information System</p>
 
-        <form className="login-form" onSubmit={handleSubmit}>
-          <label>Email Address</label>
-          <input 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
+      <form className="login-form" onSubmit={handleLogin}>
+        <label>Email Address</label>
+        <input
+          type="email"
+          placeholder="admin@powesome.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
+        <label>Password</label>
+        <div className="password-wrapper">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
+          <span
+            className="toggle-password"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+          </span>
+        </div>
 
-          <label>Password</label>
-          <input 
-            type="password" 
-            placeholder="Enter your password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-          />
+        <div className="login-options">
+          <label>
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+            Remember me
+          </label>
+          <a href="/forgot-password" className="forgot-link">Forgot password?</a>
+        </div>
 
-          <div className="login-options">
-            <label>
-              <input type="checkbox" />
-              Remember me
-            </label>
-            <a href="#">Forgot password?</a>
-          </div>
+        <button type="submit" className="login-btn">Sign In</button>
 
-          <button type="submit" className="login-btn">Sign In</button>
+        <p className="signup-text">
+          Don't have an account? <a href="/signup">Create New Account</a>
+        </p>
 
-          <div className="signup-section">
-            <p>Don’t have an account?</p>
-            <button type="button" className="signup-btn" onClick={handleSignUp}>
-              Create New Account
-            </button>
-          </div>
-
-          <p className="demo-note">Demo: Use any email and password to login</p>
-        </form>
-      </div>
+        <p className="demo-note">Demo: Use any email and password to login</p>
+      </form>
     </div>
   );
 }

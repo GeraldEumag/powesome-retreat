@@ -11,10 +11,10 @@ import PointOfSale from './Components/PointOfSale';
 import Inventory from './Components/Inventory';
 import UserManagement from './Components/UserManagement';
 import Reports from './Components/Reports';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
-  // ✅ Shared inventory state
   const [items, setItems] = useState([
     { sku: 'DF-001', name: 'Premium Dog Food', category: 'Food', stock: 45, minStock: 20, price: 1200, supplier: 'PetCo Supplies' },
     { sku: 'AC-002', name: 'Cat Litter', category: 'Accessories', stock: 30, minStock: 25, price: 350, supplier: 'Clean Pets Inc' },
@@ -22,30 +22,107 @@ function App() {
     { sku: 'GR-004', name: 'Dog Shampoo', category: 'Grooming', stock: 35, minStock: 20, price: 280, supplier: 'Grooming Pro' }
   ]);
 
+  const [loading, setLoading] = useState(true);
+
+  // ✅ Auto-redirect with loading screen
+  useEffect(() => {
+    const rememberMe = localStorage.getItem('rememberMe');
+    const role = localStorage.getItem('userRole');
+
+    if (rememberMe && role) {
+      if (role === 'admin') {
+        window.location.replace('/dashboard');
+      } else if (role === 'customer') {
+        window.location.replace('/');
+      }
+    }
+    setTimeout(() => setLoading(false), 800); // simulate loading delay
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="loading-screen">
+        <div className="spinner"></div>
+        <p>Loading your session...</p>
+      </div>
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        {/* Default homepage */}
+        {/* Public routes */}
         <Route path="/" element={<LandingPage />} />
-
-        {/* Auth routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
 
-        {/* Main system routes */}
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/pets" element={<Pets />} />
-        <Route path="/reservations" element={<HotelReservations />} />
-        <Route path="/veterinary" element={<Veterinary />} />
+        {/* Admin-only routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/pets"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Pets />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reservations"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <HotelReservations />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/veterinary"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Veterinary />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/pos"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <PointOfSale items={items} setItems={setItems} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/inventory"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Inventory items={items} setItems={setItems} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UserManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Reports />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* ✅ Pass inventory state into POS and Inventory */}
-        <Route path="/pos" element={<PointOfSale items={items} setItems={setItems} />} />
-        <Route path="/inventory" element={<Inventory items={items} setItems={setItems} />} />
-
-        <Route path="/users" element={<UserManagement />} />
-        <Route path="/reports" element={<Reports />} />
-
-        {/* Catch-all: redirect unknown routes to homepage */}
+        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

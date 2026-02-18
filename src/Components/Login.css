@@ -1,112 +1,100 @@
-/* src/components/Login.css */
 .login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: #f0f2f5;
-}
-
-.login-box {
-  background: white;
-  padding: 40px;
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   text-align: center;
-  width: 350px;
 }
 
-.login-box h1 {
-  margin-bottom: 10px;
-  font-size: 24px;
+.login-container h2 {
+  margin-bottom: 5px;
   color: #2c3e50;
 }
 
-.login-box h2 {
+.login-container p {
   margin-bottom: 20px;
-  font-size: 16px;
-  color: #7f8c8d;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
+  color: #555;
 }
 
 .login-form label {
-  margin: 10px 0 5px;
-  font-size: 14px;
-  color: #333;
+  display: block;
+  text-align: left;
+  margin-bottom: 6px;
+  font-weight: 500;
 }
 
-.login-form input {
+.login-form input[type="email"],
+.password-wrapper input {
+  width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  border: 1px solid #aaa;
   border-radius: 4px;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  padding-right: 40px; /* space for eye icon */
+}
+
+.toggle-password {
+  position: absolute;
+  margin-top: -10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #555;
+}
+.toggle-password:hover {
+  color: #27ae60;
 }
 
 .login-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
-  font-size: 13px;
+  margin-bottom: 15px;
 }
 
-.login-options a {
+.forgot-link {
+  font-size: 14px;
   color: #3498db;
   text-decoration: none;
 }
 
-.login-options a:hover {
-  text-decoration: underline;
-}
-
 .login-btn {
-  background: #27ae60;
-  color: white;
+  width: 100%;
   padding: 12px;
+  background: #27ae60;
+  color: #fff;
   border: none;
-  border-radius: 4px;
-  margin-top: 15px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
 }
-
 .login-btn:hover {
   background: #219150;
 }
 
-.demo-note {
-  margin-top: 10px;
-  font-size: 12px;
-  color: #7f8c8d;
-  text-align: center;
-}
-
-.signup-section {
+.signup-text {
   margin-top: 15px;
-  text-align: center;
+  font-size: 14px;
 }
 
-.signup-section p {
-  margin: 5px 0;
-  font-size: 13px;
-  color: #333;
-}
-
-.signup-btn {
-  background: transparent;
-  border: 1px solid #3498db;
+.signup-text a {
   color: #3498db;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 13px;
+  text-decoration: none;
 }
 
-.signup-btn:hover {
-  background: #3498db;
-  color: white;
+.demo-note {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #888;
 }

@@ -1,0 +1,86 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.reservation-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.reservation-form input,
+.reservation-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+.pet-type {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.pet-type button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  background: #f9f9f9;
+  cursor: pointer;
+}
+.pet-type button.active {
+  background: #27ae60;
+  color: #fff;
+  border-color: #27ae60;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  background: #ccc;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.cancel-btn:hover {
+  background: #aaa;
+}
+
+.confirm-btn {
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.confirm-btn:hover {
+  background: #219150;
+}
