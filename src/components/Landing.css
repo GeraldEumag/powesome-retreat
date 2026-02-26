@@ -1,0 +1,97 @@
+.landing {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #e6f2ff; /* light blue background */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.landing-header {
+  display: flex;
+  justify-content: flex-start; /* only brand title now */
+  align-items: center;
+  padding: 20px 40px;
+}
+
+.brand-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px;
+}
+
+.hero-text {
+  max-width: 50%;
+}
+
+.hero-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  display: flex;
+  align-items: center;        /* ✅ vertically align buttons */
+  justify-content: flex-start; /* ✅ keep them grouped */
+  gap: 40px;                  /* ✅ bigger separation between buttons */
+}
+
+/* Shared button style (same size + flex centering) */
+.hero-buttons button {
+  width: 160px;       /* ✅ fixed width */
+  height: 50px;       /* ✅ fixed height */
+  margin-top: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  display: flex;       /* flexbox inside button */
+  align-items: center; /* vertical centering */
+  justify-content: center; /* horizontal centering */
+  padding: 0;
+}
+
+/* Get Started button (pink) */
+.get-started-btn {
+  background-color: #ffb6c1;
+  color: #000;
+}
+
+.get-started-btn:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+/* Login button (white/blue, same size as pink) */
+.login-btn {
+  background-color: #ffffff; /* ✅ white like in your sample */
+  color: #000;
+  border: 2px solid #87ceeb; /* ✅ subtle blue border for contrast */
+}
+
+.login-btn:hover {
+  background-color: #87ceeb;
+  color: #fff;
+}
+
+/* Hero Image */
+.hero-image img {
+  max-width: 700px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}

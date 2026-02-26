@@ -1,0 +1,103 @@
+.receipt-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.receipt-box {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  font-family: monospace;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.receipt-box h3 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.receipt-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.receipt-box li {
+  border-bottom: 1px dashed #ccc;
+  padding: 5px 0;
+}
+
+.totals {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  font-family: monospace;
+}
+
+.totals p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.receipt-footer {
+  margin-top: 10px;
+  text-align: center;
+  font-style: italic;
+  color: #444;
+}
+
+.receipt-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.print-btn, .close-btn {
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.print-btn:hover, .close-btn:hover {
+  background: #1976d2;
+}
+
+/* Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .receipt-box, .receipt-box * {
+    visibility: visible;
+  }
+
+  .receipt-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    max-height: none;
+  }
+
+  .receipt-actions {
+    display: none;
+  }
+}

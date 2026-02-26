@@ -1,0 +1,26 @@
+.create-btn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.create-btn:hover {
+  background: #388e3c;
+}
+
+.create-user-form label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.create-user-form input,
+.create-user-form select {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}

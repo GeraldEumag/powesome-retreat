@@ -1,0 +1,87 @@
+/* Default (light mode) */
+.cashier-dashboard {
+  background: #f9f9f9;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-header {
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #eee;
+}
+
+.dashboard-nav li {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.dashboard-nav li.active {
+  background: #2196f3;
+  color: #fff;
+}
+
+/* Dark mode overrides */
+.cashier-dashboard.dark {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+.cashier-dashboard.dark .dashboard-header {
+  background: #1e1e1e;
+  border-bottom: 1px solid #333;
+}
+
+.cashier-dashboard.dark .dashboard-nav ul {
+  background: #1e1e1e;
+}
+
+.cashier-dashboard.dark .dashboard-nav li {
+  color: #ccc;
+}
+
+.cashier-dashboard.dark .dashboard-nav li.active {
+  background: #4caf50;
+  color: #fff;
+}
+
+.cashier-dashboard.dark .toggle-btn {
+  background: #333;
+  color: #fff;
+}
+
+.cashier-dashboard.dark .logout-btn {
+  background: #f44336;
+  color: #fff;
+}
+
+/* ✅ POS dark mode overrides */
+.cashier-dashboard.dark .pos-section {
+  background: #121212;
+  color: #eee;
+}
+
+.cashier-dashboard.dark .product-card {
+  background: #1e1e1e !important;
+  border: 1px solid #333 !important;
+  color: #eee !important;
+}
+
+.cashier-dashboard.dark .order-summary {
+  background: #1e1e1e !important;
+  border: 1px solid #333 !important;
+  color: #eee !important;
+}

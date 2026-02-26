@@ -1,0 +1,211 @@
+.inventory-section {
+  margin-top: 20px;
+}
+
+/* Inventory actions */
+.inventory-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+/* ✅ Minimal button style for all top actions */
+.add-btn,
+.manage-btn,
+.export-btn,
+.edit-btn,
+.delete-btn,
+.save-btn,
+.cancel-btn {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 0px;
+  background: #f9f9f9;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Hover effect */
+.add-btn:hover,
+.manage-btn:hover,
+.export-btn:hover,
+.edit-btn:hover,
+.delete-btn:hover,
+.save-btn:hover,
+.cancel-btn:hover {
+  background: #e0e0e0;
+}
+
+/* Dark mode overrides */
+.cashier-dashboard.dark .add-btn,
+.cashier-dashboard.dark .manage-btn,
+.cashier-dashboard.dark .export-btn,
+.cashier-dashboard.dark .edit-btn,
+.cashier-dashboard.dark .delete-btn,
+.cashier-dashboard.dark .save-btn,
+.cashier-dashboard.dark .cancel-btn {
+  background: #2a2a2a;
+  border: 1px solid #555;
+  color: #eee;
+}
+
+.cashier-dashboard.dark .add-btn:hover,
+.cashier-dashboard.dark .manage-btn:hover,
+.cashier-dashboard.dark .export-btn:hover,
+.cashier-dashboard.dark .edit-btn:hover,
+.cashier-dashboard.dark .delete-btn:hover,
+.cashier-dashboard.dark .save-btn:hover,
+.cashier-dashboard.dark .cancel-btn:hover {
+  background: #3a3a3a;
+}
+
+/* Inventory table */
+.inventory-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.inventory-section th,
+.inventory-section td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.inventory-section th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+.inventory-section tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.inventory-section tr:hover {
+  background: #f0f8ff;
+}
+
+.cashier-dashboard.dark .inventory-section th {
+  background: #1e1e1e;
+  color: #eee;
+}
+
+.cashier-dashboard.dark .inventory-section td {
+  background: #121212;
+  color: #eee;
+  border: 1px solid #333;
+}
+
+.cashier-dashboard.dark .inventory-section tr:nth-child(even) {
+  background: #1a1a1a;
+}
+
+.cashier-dashboard.dark .inventory-section tr:hover {
+  background: #2a2a2a;
+}
+
+/* Popup overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.popup-box {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.cashier-dashboard.dark .popup-box {
+  background: #1e1e1e;
+  color: #eee;
+  border: 1px solid #333;
+}
+
+/* Form grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #444;
+}
+
+.cashier-dashboard.dark .form-group label {
+  color: #ccc;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.cashier-dashboard.dark .form-group input,
+.cashier-dashboard.dark .form-group select {
+  background: #2a2a2a;
+  border: 1px solid #555;
+  color: #eee;
+}
+
+/* Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.category-list {
+  margin-bottom: 15px;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.add-category {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
