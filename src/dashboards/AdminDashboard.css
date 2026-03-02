@@ -34,3 +34,10 @@
   background-color: black;
   color: white;
 }
+.admin-dashboard {
+  padding: 20px;
+}
+
+.admin-dashboard section {
+  margin-bottom: 40px;
+}

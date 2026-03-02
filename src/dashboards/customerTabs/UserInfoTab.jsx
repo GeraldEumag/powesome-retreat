@@ -6,21 +6,30 @@ function UserInfoTab() {
   const { userInfo, setUserInfo } = useContext(UserContext);
   const [showEditModal, setShowEditModal] = useState(false);
 
+  if (!userInfo) {
+    return (
+      <section className="dashboard-section profile-section">
+        <h3>My Profile</h3>
+        <p style={{ color: "red" }}>⚠️ No user profile data available</p>
+      </section>
+    );
+  }
+
   return (
     <section className="dashboard-section profile-section">
       <h3>My Profile</h3>
       <div className="profile-info">
-        <p><strong>Full Name:</strong> {userInfo.name}</p>
-        <p><strong>Email:</strong> {userInfo.email}</p>
-        <p><strong>Phone:</strong> {userInfo.phone}</p>
-        <p><strong>Address:</strong> {userInfo.address}</p>
-        <p><strong>Member Since:</strong> {userInfo.memberSince}</p>
+        <p><strong>Full Name:</strong> {userInfo.name || "Unknown"}</p>
+        <p><strong>Email:</strong> {userInfo.email || "N/A"}</p>
+        <p><strong>Phone:</strong> {userInfo.phone || "N/A"}</p>
+        <p><strong>Address:</strong> {userInfo.address || "N/A"}</p>
+        <p><strong>Member Since:</strong> {userInfo.memberSince || "N/A"}</p>
       </div>
 
       <div className="summary-boxes">
-        <div className="summary-box">Total Bookings: <span>{userInfo.totalBookings}</span></div>
-        <div className="summary-box">Total Purchases: <span>{userInfo.totalPurchases}</span></div>
-        <div className="summary-box">My Pets: <span>{userInfo.petsCount}</span></div>
+        <div className="summary-box">Total Bookings: <span>{userInfo.totalBookings || 0}</span></div>
+        <div className="summary-box">Total Purchases: <span>{userInfo.totalPurchases || 0}</span></div>
+        <div className="summary-box">My Pets: <span>{userInfo.petsCount || 0}</span></div>
       </div>
 
       <h4>Booking History</h4>

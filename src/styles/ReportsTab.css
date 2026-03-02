@@ -68,3 +68,35 @@
 .transactions-table tr:nth-child(even) {
   background: #fafafa;
 }
+.reports-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.report-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.report-controls input,
+.report-controls select {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.export-btn {
+  background: #ff9800;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.export-btn:hover {
+  background: #e68900;
+}

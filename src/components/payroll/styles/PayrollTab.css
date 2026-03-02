@@ -1,0 +1,16 @@
+.payroll-tab {
+  padding: 20px;
+}
+
+.payroll-tab h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.payroll-tab section {
+  margin-bottom: 40px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 6px;
+  background: #fafafa;
+}

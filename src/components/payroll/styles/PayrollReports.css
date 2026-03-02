@@ -1,0 +1,47 @@
+.payroll-reports {
+  padding: 20px;
+}
+
+.report-card {
+  margin-bottom: 30px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 6px;
+  background: #f9f9f9;
+}
+
+.report-card h3 {
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+thead {
+  background-color: #eaeaea;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+.export-buttons {
+  margin-top: 10px;
+}
+
+.export-buttons button {
+  margin-right: 10px;
+  padding: 6px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.export-buttons button:hover {
+  background-color: #218838;
+}

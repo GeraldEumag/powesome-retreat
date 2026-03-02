@@ -1,0 +1,39 @@
+.employee-list {
+  padding: 20px;
+}
+
+.employee-form {
+  margin-bottom: 20px;
+}
+
+.employee-form input,
+.employee-form select {
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.employee-form button {
+  padding: 6px 12px;
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.employee-form button:hover {
+  background-color: #005a9e;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #f4f4f4;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}

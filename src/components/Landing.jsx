@@ -17,23 +17,31 @@ function Landing() {
         <div className="hero-text">
           <h2>Your Pet's Home Away From Home</h2>
           <p>
-            Premium pet care services for your beloved dogs and cats. 
-            From luxury boarding to veterinary care, we provide everything 
+            Premium pet care services for your beloved dogs and cats.
+            From luxury boarding to veterinary care, we provide everything
             your furry friends need.
           </p>
           <div className="hero-buttons">
-            {/* ✅ Directs to /register now */}
-            <button className="get-started-btn" onClick={() => navigate("/register")}>
+            <button
+              type="button"
+              className="get-started-btn"
+              onClick={() => navigate("/register")}
+            >
               Get Started
             </button>
-            <button className="login-btn" onClick={() => navigate("/login")}>
+            <button
+              type="button"
+              className="login-btn"
+              onClick={() => navigate("/login")}
+            >
               Login
             </button>
           </div>
         </div>
 
         <div className="hero-image">
-          <img src="/pets-hero.png" alt="Dog and Cat" />
+          {/* ✅ Use public folder for static assets */}
+          <img src={process.env.PUBLIC_URL + "/pets-hero.png"} alt="Dog and Cat" />
         </div>
       </section>
     </div>

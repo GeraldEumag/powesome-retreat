@@ -4,19 +4,19 @@ import "../../styles/UsersTab.css";
 import "../../styles/Modal.css";
 
 function UsersTab() {
-  const { users, updateUser, deleteUser } = useContext(UserContext);
+  const { users = [], updateUser, deleteUser } = useContext(UserContext); // ✅ default empty array
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState("All Roles");
   const [statusFilter, setStatusFilter] = useState("All Status");
   const [editingUser, setEditingUser] = useState(null);
   const [deletingUser, setDeletingUser] = useState(null);
 
-  // ✅ Now actually used in table
-  const filteredUsers = users.filter(user => {
+  // ✅ Filter logic
+  const filteredUsers = users.filter((user) => {
     const matchesSearch =
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.role.toLowerCase().includes(searchTerm.toLowerCase());
+      (user.name?.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (user.email?.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (user.role?.toLowerCase().includes(searchTerm.toLowerCase()));
 
     const matchesRole = roleFilter === "All Roles" || user.role === roleFilter;
     const matchesStatus = statusFilter === "All Status" || user.status === statusFilter;
@@ -25,13 +25,17 @@ function UsersTab() {
   });
 
   const handleSave = () => {
-    updateUser(editingUser);   // ✅ used here
-    setEditingUser(null);
+    if (editingUser) {
+      updateUser(editingUser);
+      setEditingUser(null);
+    }
   };
 
   const handleDelete = () => {
-    deleteUser(deletingUser.email);   // ✅ used here
-    setDeletingUser(null);
+    if (deletingUser) {
+      deleteUser(deletingUser.email);
+      setDeletingUser(null);
+    }
   };
 
   return (
@@ -39,7 +43,7 @@ function UsersTab() {
       <h3>User Management</h3>
       <p>Manage system users and permissions</p>
 
-      {/* Filters now use setSearchTerm, setRoleFilter, setStatusFilter */}
+      {/* Filters */}
       <div className="user-filters">
         <input
           type="text"
@@ -63,7 +67,7 @@ function UsersTab() {
         </select>
       </div>
 
-      {/* ✅ filteredUsers now used */}
+      {/* Table */}
       <table className="user-table">
         <thead>
           <tr>
@@ -72,21 +76,22 @@ function UsersTab() {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.map((user, index) => (
-            <tr key={index}>
-              <td>{user.initials} | {user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.phone}</td>
-              <td>{user.role}</td>
-              <td>{user.status}</td>
-              <td>{user.lastLogin}</td>
-              <td>
-                <button className="edit-btn" onClick={() => setEditingUser(user)}>Edit</button>
-                <button className="delete-btn" onClick={() => setDeletingUser(user)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-          {filteredUsers.length === 0 && (
+          {filteredUsers.length > 0 ? (
+            filteredUsers.map((user, index) => (
+              <tr key={index}>
+                <td>{user.initials || "?"} | {user.name || "Unknown"}</td>
+                <td>{user.email || "N/A"}</td>
+                <td>{user.phone || "N/A"}</td>
+                <td>{user.role || "N/A"}</td>
+                <td>{user.status || "N/A"}</td>
+                <td>{user.lastLogin || "Never"}</td>
+                <td>
+                  <button className="edit-btn" onClick={() => setEditingUser(user)}>Edit</button>
+                  <button className="delete-btn" onClick={() => setDeletingUser(user)}>Delete</button>
+                </td>
+              </tr>
+            ))
+          ) : (
             <tr>
               <td colSpan="7" style={{ textAlign: "center" }}>No users found</td>
             </tr>
@@ -94,7 +99,7 @@ function UsersTab() {
         </tbody>
       </table>
 
-      {/* ✅ Edit Popup uses handleSave */}
+      {/* Edit Modal */}
       {editingUser && (
         <div className="modal">
           <div className="modal-content">
@@ -102,18 +107,18 @@ function UsersTab() {
             <label>Name</label>
             <input
               type="text"
-              value={editingUser.name}
+              value={editingUser.name || ""}
               onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
             />
             <label>Role</label>
             <input
               type="text"
-              value={editingUser.role}
+              value={editingUser.role || ""}
               onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value })}
             />
             <label>Status</label>
             <select
-              value={editingUser.status}
+              value={editingUser.status || "Active"}
               onChange={(e) => setEditingUser({ ...editingUser, status: e.target.value })}
             >
               <option>Active</option>
@@ -127,12 +132,12 @@ function UsersTab() {
         </div>
       )}
 
-      {/* ✅ Delete Popup uses handleDelete */}
+      {/* Delete Modal */}
       {deletingUser && (
         <div className="modal">
           <div className="modal-content">
             <h4>Confirm Delete</h4>
-            <p>Are you sure you want to delete <strong>{deletingUser.name}</strong>?</p>
+            <p>Are you sure you want to delete <strong>{deletingUser.name || "this user"}</strong>?</p>
             <div className="modal-actions">
               <button onClick={handleDelete}>Yes, Delete</button>
               <button onClick={() => setDeletingUser(null)}>Cancel</button>

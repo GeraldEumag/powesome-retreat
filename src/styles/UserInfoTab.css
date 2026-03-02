@@ -1,0 +1,14 @@
+.user-info-tab {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #f9f9f9;
+}
+
+.user-info-tab h2 {
+  margin-bottom: 10px;
+}
+
+.user-info-tab p {
+  margin: 5px 0;
+}

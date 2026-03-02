@@ -9,28 +9,45 @@ function LoginForm() {
   const [role, setRole] = useState("customer"); // default role
   const navigate = useNavigate();
 
+  // ✅ Map role values to match ProtectedRoute allowedRoles
+  const roleMap = {
+    admin: "Administrator",
+    receptionist: "Receptionist",
+    cashier: "Cashier",
+    veterinary: "Veterinary",
+    customer: "Customer",
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // ✅ Record login event
+    const mappedRole = roleMap[role];
+
+    // ✅ Record login event with correct role
     addLoginEvent({
-      user: `${role.charAt(0).toUpperCase() + role.slice(1)} User`,
-      role: role.charAt(0).toUpperCase() + role.slice(1),
+      user: `${mappedRole} User`,
+      role: mappedRole,
       status: "Success",
       time: new Date().toLocaleString(),
     });
 
-    // Redirect based on role
-    if (role === "admin") {
-      navigate("/admin");
-    } else if (role === "receptionist") {
-      navigate("/receptionist");
-    } else if (role === "cashier") {
-      navigate("/cashier");
-    } else if (role === "veterinary") {
-      navigate("/veterinary");
-    } else {
-      navigate("/dashboard"); // customer
+    // ✅ Redirect based on role
+    switch (role) {
+      case "admin":
+        navigate("/admin");
+        break;
+      case "receptionist":
+        navigate("/receptionist");
+        break;
+      case "cashier":
+        navigate("/cashier");
+        break;
+      case "veterinary":
+        navigate("/veterinary");
+        break;
+      default:
+        navigate("/dashboard"); // customer
+        break;
     }
   };
 

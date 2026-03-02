@@ -1,0 +1,37 @@
+.payslip {
+  padding: 20px;
+}
+
+.payslip-controls {
+  margin-bottom: 20px;
+}
+
+.payslip-controls select,
+.payslip-controls input {
+  margin-right: 10px;
+  padding: 6px;
+}
+
+.payslip-controls button {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.payslip-controls button:hover {
+  background-color: #0056b3;
+}
+
+.payslip-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 6px;
+  background: #f9f9f9;
+  margin-top: 20px;
+}
+
+.payslip-card h3 {
+  margin-bottom: 10px;
+}

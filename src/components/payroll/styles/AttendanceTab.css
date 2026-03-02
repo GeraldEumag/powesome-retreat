@@ -1,0 +1,39 @@
+.attendance-tab {
+  padding: 20px;
+}
+
+.attendance-form {
+  margin-bottom: 20px;
+}
+
+.attendance-form input,
+.attendance-form select {
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.attendance-form button {
+  padding: 6px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.attendance-form button:hover {
+  background-color: #218838;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #f4f4f4;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}

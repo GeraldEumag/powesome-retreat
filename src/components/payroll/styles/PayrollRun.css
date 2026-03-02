@@ -1,0 +1,43 @@
+.payroll-run {
+  padding: 20px;
+}
+
+.run-controls {
+  margin-bottom: 20px;
+}
+
+.run-controls input {
+  padding: 8px;
+  margin-right: 10px;
+}
+
+.run-controls button {
+  padding: 8px 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.run-controls button:hover {
+  background-color: #0056b3;
+}
+
+.payroll-run-history {
+  margin-bottom: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #eaeaea;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}

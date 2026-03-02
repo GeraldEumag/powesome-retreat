@@ -1,23 +1,55 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [users, setUsers] = useState([
-    { initials: "AU", name: "Admin User", email: "admin@powesome.com", phone: "0912-345-6789", role: "Administrator", status: "Active", lastLogin: "2026-02-12 09:30 AM" },
-    { initials: "DM", name: "Dr. Martinez", email: "martinez@powesome.com", phone: "0923-456-7890", role: "Veterinarian", status: "Active", lastLogin: "2026-02-12 08:15 AM" },
-    { initials: "SJ", name: "Sarah Johnson", email: "sarah@powesome.com", phone: "0945-678-9012", role: "Receptionist", status: "Active", lastLogin: "2026-02-11 05:30 PM" },
-    { initials: "MW", name: "Mike Wilson", email: "mike@powesome.com", phone: "0956-789-0123", role: "Manager", status: "Inactive", lastLogin: "2026-02-10 08:00 AM" },
+    {
+      initials: "AU",
+      name: "Admin User",
+      email: "admin@pawesome.com",
+      phone: "09123456789",
+      role: "Administrator",
+      status: "Active",
+      lastLogin: "2026-02-25 09:30 AM",
+    },
+    {
+      initials: "SJ",
+      name: "Sarah Johnson",
+      email: "sarah@pawesome.com",
+      phone: "09987654321",
+      role: "Receptionist",
+      status: "Active",
+      lastLogin: "2026-02-25 08:15 AM",
+    },
   ]);
 
-  const addUser = (user) => setUsers([...users, user]);
-  const updateUser = (updatedUser) =>
-    setUsers(users.map(u => u.email === updatedUser.email ? updatedUser : u));
-  const deleteUser = (email) =>
-    setUsers(users.filter(u => u.email !== email));
+  // ✅ Update user
+  const updateUser = (updatedUser) => {
+    setUsers((prev) =>
+      prev.map((u) => (u.email === updatedUser.email ? updatedUser : u))
+    );
+  };
+
+  // ✅ Delete user
+  const deleteUser = (email) => {
+    setUsers((prev) => prev.filter((u) => u.email !== email));
+  };
+
+  // ✅ Persist users in localStorage
+  useEffect(() => {
+    const storedUsers = localStorage.getItem("users");
+    if (storedUsers) {
+      setUsers(JSON.parse(storedUsers));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("users", JSON.stringify(users));
+  }, [users]);
 
   return (
-    <UserContext.Provider value={{ users, addUser, updateUser, deleteUser }}>
+    <UserContext.Provider value={{ users, updateUser, deleteUser }}>
       {children}
     </UserContext.Provider>
   );

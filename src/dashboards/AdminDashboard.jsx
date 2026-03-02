@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AdminDashboard.css";   // ✅ correct path since it's in dashboards
+import "./AdminDashboard.css";
 import "../styles/DashboardTheme.css";
 
+// ✅ Admin Tabs
 import UsersTab from "../components/admin/UsersTab";
 import CreateUserTab from "../components/admin/CreateUserTab";
 import ReportsTab from "../components/admin/ReportsTab";
 import LoginHistoryTab from "../components/admin/LoginHistoryTab";
-import PayrollTab from "../components/admin/PayrollTab";
+import PayrollTab from "../components/payroll/PayrollTab";   // ✅ updated path
 import AttendanceTab from "../components/admin/AttendanceTab";
 
+// ✅ Context
 import { LoginContext } from "../context/LoginContext";
 
 function AdminDashboard() {
@@ -18,9 +20,10 @@ function AdminDashboard() {
     return localStorage.getItem("darkMode") === "true";
   });
 
-  const { addLogoutEvent } = useContext(LoginContext);
+  const { addLogoutEvent, currentUser } = useContext(LoginContext);
   const navigate = useNavigate();
 
+  // ✅ Dark Mode toggle persistence
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add("dark-mode");
@@ -30,12 +33,28 @@ function AdminDashboard() {
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
+  // ✅ Logout handler
   const handleLogout = () => {
-    // ✅ Record logout event
-    addLogoutEvent("Admin User", "Administrator");
-    // Redirect to login page
+    addLogoutEvent(
+      currentUser?.name || "Admin User",
+      currentUser?.role || "Administrator"
+    );
     navigate("/login");
   };
+
+  // ✅ Tabs available to Admin only
+  const adminTabs = [
+    "Users",
+    "Create User",
+    "Reports",
+    "Login History",
+    "Payroll",
+    "Attendance",
+  ];
+  const nonAdminTabs = ["Users", "Reports", "Login History"]; // fallback for other roles
+
+  const tabsToShow =
+    currentUser?.role === "Administrator" ? adminTabs : nonAdminTabs;
 
   return (
     <div className="admin-dashboard">
@@ -43,18 +62,26 @@ function AdminDashboard() {
       <header className="dashboard-header">
         <h2>Powesome Retreat Inc. — Admin Dashboard</h2>
         <div className="header-actions">
-          <span className="user-info">Admin User (Administrator)</span>
-          <button className="toggle-btn" onClick={() => setDarkMode(!darkMode)}>
+          <span className="user-info">
+            {currentUser?.name || "Admin User"} (
+            {currentUser?.role || "Administrator"})
+          </span>
+          <button
+            className="toggle-btn"
+            onClick={() => setDarkMode(!darkMode)}
+          >
             {darkMode ? "Light Mode" : "Dark Mode"}
           </button>
-          <button className="logout-btn" onClick={handleLogout}>Logout</button>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </header>
 
       {/* Navigation */}
       <nav className="dashboard-nav">
         <ul>
-          {["Users", "Create User", "Reports", "Login History", "Payroll", "Attendance"].map(tab => (
+          {tabsToShow.map((tab) => (
             <li
               key={tab}
               className={activeTab === tab ? "active" : ""}
@@ -68,11 +95,14 @@ function AdminDashboard() {
 
       {/* Dynamic Content */}
       {activeTab === "Users" && <UsersTab />}
-      {activeTab === "Create User" && <CreateUserTab />}
+      {activeTab === "Create User" &&
+        currentUser?.role === "Administrator" && <CreateUserTab />}
       {activeTab === "Reports" && <ReportsTab />}
       {activeTab === "Login History" && <LoginHistoryTab />}
-      {activeTab === "Payroll" && <PayrollTab />}
-      {activeTab === "Attendance" && <AttendanceTab />}
+      {activeTab === "Payroll" &&
+        currentUser?.role === "Administrator" && <PayrollTab />}
+      {activeTab === "Attendance" &&
+        currentUser?.role === "Administrator" && <AttendanceTab />}
     </div>
   );
 }

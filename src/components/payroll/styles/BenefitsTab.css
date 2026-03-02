@@ -1,0 +1,25 @@
+.benefits-tab {
+  padding: 20px;
+}
+
+.benefits-tab h2 {
+  margin-bottom: 15px;
+}
+
+.benefits-tab select,
+.benefits-tab input {
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.benefits-tab button {
+  padding: 6px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.benefits-tab button:hover {
+  background-color: #218838;
+}

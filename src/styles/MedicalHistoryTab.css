@@ -1,0 +1,35 @@
+.table-wrapper {
+  margin-top: 15px;
+  overflow-x: auto;
+}
+
+.table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-wrapper th,
+.table-wrapper td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table-wrapper th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.export-btn, .print-btn {
+  margin-right: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.export-btn:hover, .print-btn:hover {
+  background-color: #0056b3;
+}

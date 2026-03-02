@@ -18,10 +18,10 @@ function BuyProductsTab() {
     <section className="dashboard-section">
       <h3>Buy Products</h3>
       <div className="products-container">
-        {inventory.map(product => (
+        {inventory.map((product) => (
           <div key={product.id} className="product-card">
             <h4>{product.name}</h4>
-            <p>Price: ${product.price}</p>
+            <p>Price: ₱{product.price}</p>
             <p>Stock: {product.stock}</p>
             <button
               className="buy-btn"
@@ -37,7 +37,9 @@ function BuyProductsTab() {
       <h4>My Cart</h4>
       <ul>
         {cart.map((item, index) => (
-          <li key={index}>{item.name} - ${item.price}</li>
+          <li key={index}>
+            {item.name} - ₱{item.price}
+          </li>
         ))}
       </ul>
     </section>
