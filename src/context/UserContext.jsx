@@ -1,7 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 
+// ✅ Named export for the context
 export const UserContext = createContext();
 
+// ✅ Named export for the provider
 export function UserProvider({ children }) {
   const [users, setUsers] = useState([
     {
@@ -36,7 +38,7 @@ export function UserProvider({ children }) {
     setUsers((prev) => prev.filter((u) => u.email !== email));
   };
 
-  // ✅ Persist users in localStorage
+  // ✅ Load from localStorage
   useEffect(() => {
     const storedUsers = localStorage.getItem("users");
     if (storedUsers) {
@@ -44,6 +46,7 @@ export function UserProvider({ children }) {
     }
   }, []);
 
+  // ✅ Save to localStorage
   useEffect(() => {
     localStorage.setItem("users", JSON.stringify(users));
   }, [users]);

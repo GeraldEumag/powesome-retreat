@@ -1,19 +1,22 @@
 import React, { useContext, useState } from "react";
-import { ReportContext } from "../../context/ReportContext";
+import { UserContext } from "../../context/UserContext"; // ✅ use UserContext
 import "./ReceptionistStyles.css";
 
 const CustomerProfile = () => {
-  const { customerProfiles, setCustomerProfiles } = useContext(ReportContext);
+  const { users, updateUser, deleteUser } = useContext(UserContext);
 
   const [newCustomer, setNewCustomer] = useState({
+    initials: "",
     name: "",
     contact: "",
     email: "",
     petCount: 0,
-    status: "Pending"
+    role: "Customer",
+    status: "Pending",
+    lastLogin: "N/A"
   });
 
-  const [editingId, setEditingId] = useState(null);
+  const [editingEmail, setEditingEmail] = useState(null);
   const [editData, setEditData] = useState({});
 
   const handleChange = (e) =>
@@ -23,27 +26,36 @@ const CustomerProfile = () => {
     setEditData({ ...editData, [e.target.name]: e.target.value });
 
   const handleAddCustomer = () => {
-    const id = customerProfiles.length + 1;
-    setCustomerProfiles([...customerProfiles, { id, ...newCustomer }]);
-    setNewCustomer({ name: "", contact: "", email: "", petCount: 0, status: "Pending" });
+    const initials = newCustomer.name
+      ? newCustomer.name
+          .split(" ")
+          .map((n) => n[0])
+          .join("")
+          .toUpperCase()
+      : "CU";
+
+    const newUser = { ...newCustomer, initials };
+    updateUser(newUser); // ✅ add via updateUser
+    setNewCustomer({
+      initials: "",
+      name: "",
+      contact: "",
+      email: "",
+      petCount: 0,
+      role: "Customer",
+      status: "Pending",
+      lastLogin: "N/A"
+    });
   };
 
   const startEdit = (customer) => {
-    setEditingId(customer.id);
+    setEditingEmail(customer.email);
     setEditData(customer);
   };
 
   const saveEdit = () => {
-    setCustomerProfiles(customerProfiles.map(c => c.id === editingId ? editData : c));
-    setEditingId(null);
-  };
-
-  const deleteCustomer = (id) => {
-    setCustomerProfiles(customerProfiles.filter(c => c.id !== id));
-  };
-
-  const updateStatus = (id, newStatus) => {
-    setCustomerProfiles(customerProfiles.map(c => c.id === id ? { ...c, status: newStatus } : c));
+    updateUser(editData);
+    setEditingEmail(null);
   };
 
   return (
@@ -73,53 +85,60 @@ const CustomerProfile = () => {
         <table>
           <thead>
             <tr>
-              <th>ID</th><th>Name</th><th>Contact</th><th>Email</th><th>Pets</th><th>Status</th><th>Actions</th>
+              <th>Initials</th><th>Name</th><th>Contact</th><th>Email</th>
+              <th>Pets</th><th>Status</th><th>Role</th><th>Last Login</th><th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {customerProfiles.map(c => (
-              <tr key={c.id}>
-                {editingId === c.id ? (
-                  <>
-                    <td>{c.id}</td>
-                    <td><input name="name" value={editData.name} onChange={handleEditChange} /></td>
-                    <td><input name="contact" value={editData.contact} onChange={handleEditChange} /></td>
-                    <td><input name="email" value={editData.email} onChange={handleEditChange} /></td>
-                    <td><input type="number" name="petCount" value={editData.petCount} onChange={handleEditChange} /></td>
-                    <td>
-                      <select name="status" value={editData.status} onChange={handleEditChange}>
-                        <option value="Pending">Pending (Wait for Approval)</option>
-                        <option value="Confirmed">Confirmed</option>
-                        <option value="Completed">Completed</option>
-                      </select>
-                    </td>
-                    <td>
-                      <button onClick={saveEdit}>Save</button>
-                      <button onClick={() => setEditingId(null)}>Cancel</button>
-                    </td>
-                  </>
-                ) : (
-                  <>
-                    <td>{c.id}</td>
-                    <td>{c.name}</td>
-                    <td>{c.contact}</td>
-                    <td>{c.email}</td>
-                    <td>{c.petCount}</td>
-                    <td>{c.status}</td>
-                    <td>
-                      <button onClick={() => startEdit(c)}>Edit</button>
-                      <button onClick={() => deleteCustomer(c.id)}>Delete</button>
-                      {c.status === "Pending" && (
-                        <button onClick={() => updateStatus(c.id, "Confirmed")}>Approve</button>
-                      )}
-                      {c.status === "Confirmed" && (
-                        <button onClick={() => updateStatus(c.id, "Completed")}>Complete</button>
-                      )}
-                    </td>
-                  </>
-                )}
-              </tr>
-            ))}
+            {users
+              .filter((u) => u.role === "Customer") // ✅ only show customers
+              .map((c) => (
+                <tr key={c.email}>
+                  {editingEmail === c.email ? (
+                    <>
+                      <td>{c.initials}</td>
+                      <td><input name="name" value={editData.name} onChange={handleEditChange} /></td>
+                      <td><input name="contact" value={editData.contact} onChange={handleEditChange} /></td>
+                      <td><input name="email" value={editData.email} onChange={handleEditChange} /></td>
+                      <td><input type="number" name="petCount" value={editData.petCount} onChange={handleEditChange} /></td>
+                      <td>
+                        <select name="status" value={editData.status} onChange={handleEditChange}>
+                          <option value="Pending">Pending</option>
+                          <option value="Confirmed">Confirmed</option>
+                          <option value="Completed">Completed</option>
+                        </select>
+                      </td>
+                      <td>{editData.role}</td>
+                      <td>{editData.lastLogin}</td>
+                      <td>
+                        <button onClick={saveEdit}>Save</button>
+                        <button onClick={() => setEditingEmail(null)}>Cancel</button>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td>{c.initials}</td>
+                      <td>{c.name}</td>
+                      <td>{c.contact}</td>
+                      <td>{c.email}</td>
+                      <td>{c.petCount}</td>
+                      <td>{c.status}</td>
+                      <td>{c.role}</td>
+                      <td>{c.lastLogin}</td>
+                      <td>
+                        <button onClick={() => startEdit(c)}>Edit</button>
+                        <button onClick={() => deleteUser(c.email)}>Delete</button>
+                        {c.status === "Pending" && (
+                          <button onClick={() => updateUser({ ...c, status: "Confirmed" })}>Approve</button>
+                        )}
+                        {c.status === "Confirmed" && (
+                          <button onClick={() => updateUser({ ...c, status: "Completed" })}>Complete</button>
+                        )}
+                      </td>
+                    </>
+                  )}
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

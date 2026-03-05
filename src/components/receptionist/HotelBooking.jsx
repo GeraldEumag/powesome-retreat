@@ -1,9 +1,8 @@
 import React, { useContext, useState } from "react";
-import { ReportContext } from "../../context/ReportContext"; // shared context
+import { HotelContext } from "../../context/HotelContext"; // ✅ Correct context
 import "./ReceptionistStyles.css";
-
 const HotelBooking = () => {
-  const { hotelBookings, setHotelBookings } = useContext(ReportContext);
+  const { hotelBookings, setHotelBookings } = useContext(HotelContext);
 
   const [newBooking, setNewBooking] = useState({
     customer: "",
@@ -12,8 +11,8 @@ const HotelBooking = () => {
     room: "",
     checkIn: "",
     checkOut: "",
-    status: "Pending", // default status
-    price: 0           // ✅ added price field
+    status: "Pending",
+    price: 0
   });
 
   const [editingId, setEditingId] = useState(null);
@@ -52,15 +51,13 @@ const HotelBooking = () => {
     setEditingId(null);
   };
 
-  // ✅ Delete booking
   const deleteBooking = (id) => {
-    setHotelBookings(hotelBookings.filter(b => b.id !== id));
+    setHotelBookings(hotelBookings.filter((b) => b.id !== id));
   };
 
-  // ✅ Status workflow actions
   const updateStatus = (id, newStatus) => {
     setHotelBookings(
-      hotelBookings.map(b =>
+      hotelBookings.map((b) =>
         b.id === id ? { ...b, status: newStatus } : b
       )
     );
@@ -83,9 +80,9 @@ const HotelBooking = () => {
           <input type="text" name="room" placeholder="Room Number" value={newBooking.room} onChange={handleChange} />
           <input type="date" name="checkIn" value={newBooking.checkIn} onChange={handleChange} />
           <input type="date" name="checkOut" value={newBooking.checkOut} onChange={handleChange} />
-          <input type="number" name="price" placeholder="Price (₱)" value={newBooking.price} onChange={handleChange} /> {/* ✅ Price input */}
+          <input type="number" name="price" placeholder="Price (₱)" value={newBooking.price} onChange={handleChange} />
           <select name="status" value={newBooking.status} onChange={handleChange}>
-            <option value="Pending">Pending (Wait for Approval)</option>
+            <option value="Pending">Pending</option>
             <option value="Confirmed">Confirmed</option>
             <option value="Completed">Completed</option>
           </select>
@@ -123,12 +120,12 @@ const HotelBooking = () => {
                     <td><input name="room" value={editData.room} onChange={handleEditChange} /></td>
                     <td>
                       <select name="status" value={editData.status} onChange={handleEditChange}>
-                        <option value="Pending">Pending (Wait for Approval)</option>
+                        <option value="Pending">Pending</option>
                         <option value="Confirmed">Confirmed</option>
                         <option value="Completed">Completed</option>
                       </select>
                     </td>
-                    <td><input type="number" name="price" value={editData.price} onChange={handleEditChange} /></td> {/* ✅ Editable price */}
+                    <td><input type="number" name="price" value={editData.price} onChange={handleEditChange} /></td>
                     <td>
                       <button onClick={saveEdit}>Save</button>
                       <button onClick={() => setEditingId(null)}>Cancel</button>

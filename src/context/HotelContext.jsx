@@ -7,21 +7,14 @@ export function HotelProvider({ children }) {
     {
       id: 1,
       customer: "John Doe",
-      pet: "Bella (Dog)",
-      room: "Deluxe Suite",
-      checkIn: "2026-02-25",
-      checkOut: "2026-02-28",
+      petName: "Bella",
+      petType: "Dog",
+      checkIn: "2026-03-05",
+      checkOut: "2026-03-07",
+      room: "Deluxe",
       status: "Confirmed",
-    },
-    {
-      id: 2,
-      customer: "Jane Smith",
-      pet: "Milo (Cat)",
-      room: "Standard Room",
-      checkIn: "2026-02-26",
-      checkOut: "2026-02-27",
-      status: "Pending",
-    },
+      price: 1500
+    }
   ]);
 
   // ✅ Add booking
@@ -30,9 +23,9 @@ export function HotelProvider({ children }) {
   };
 
   // ✅ Update booking
-  const updateBooking = (updatedBooking) => {
+  const updateBooking = (updated) => {
     setHotelBookings((prev) =>
-      prev.map((b) => (b.id === updatedBooking.id ? updatedBooking : b))
+      prev.map((b) => (b.id === updated.id ? updated : b))
     );
   };
 
@@ -45,7 +38,8 @@ export function HotelProvider({ children }) {
   useEffect(() => {
     const stored = localStorage.getItem("hotelBookings");
     if (stored) {
-      setHotelBookings(JSON.parse(stored));
+      const parsed = JSON.parse(stored);
+      if (parsed.length > 0) setHotelBookings(parsed);
     }
   }, []);
 
@@ -56,7 +50,13 @@ export function HotelProvider({ children }) {
 
   return (
     <HotelContext.Provider
-      value={{ hotelBookings, addBooking, updateBooking, deleteBooking }}
+      value={{
+        hotelBookings,
+        setHotelBookings, // ✅ expose setter
+        addBooking,
+        updateBooking,
+        deleteBooking
+      }}
     >
       {children}
     </HotelContext.Provider>

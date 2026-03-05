@@ -1,9 +1,13 @@
 import React, { useContext, useState } from "react";
-import { ReportContext } from "../../context/ReportContext";
+import { HotelContext } from "../../context/HotelContext";
+import { GroomingContext } from "../../context/GroomingContext";
+import { UserContext } from "../../context/UserContext";
 import "./ReceptionistStyles.css";
 
 const ReceptionistReport = () => {
-  const { hotelBookings, groomingAppointments, customerProfiles } = useContext(ReportContext);
+  const { hotelBookings } = useContext(HotelContext);
+  const { groomingAppointments } = useContext(GroomingContext);
+  const { users } = useContext(UserContext); // treat users as customerProfiles
 
   const [searchTerm, setSearchTerm] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
@@ -29,7 +33,7 @@ const ReceptionistReport = () => {
   // ✅ Apply search + sort
   const hotelData = sortData(filterData(hotelBookings || []));
   const groomingData = sortData(filterData(groomingAppointments || []));
-  const customerData = sortData(filterData(customerProfiles || []));
+  const customerData = sortData(filterData(users || [])); // use users
 
   // ✅ Revenue calculations
   const hotelRevenue = hotelData.reduce((sum, b) => sum + (Number(b.price) || 0), 0);
@@ -116,7 +120,7 @@ const ReceptionistReport = () => {
       <table className="receptionist-table">
         <thead>
           <tr>
-            {["id","name","contact","email","petCount","status"].map(key => (
+            {["initials","name","phone","email","role","status","lastLogin"].map(key => (
               <th key={key} onClick={() => requestSort(key)} style={{cursor:"pointer"}}>
                 {key.toUpperCase()} {sortConfig.key === key ? (sortConfig.direction === "asc" ? "▲" : "▼") : ""}
               </th>
@@ -125,9 +129,9 @@ const ReceptionistReport = () => {
         </thead>
         <tbody>
           {customerData.map(c => (
-            <tr key={c.id}>
-              <td>{c.id}</td><td>{c.name}</td><td>{c.contact}</td><td>{c.email}</td>
-              <td>{c.petCount}</td><td>{c.status}</td>
+            <tr key={c.email}>
+              <td>{c.initials}</td><td>{c.name}</td><td>{c.phone}</td><td>{c.email}</td>
+              <td>{c.role}</td><td>{c.status}</td><td>{c.lastLogin}</td>
             </tr>
           ))}
         </tbody>

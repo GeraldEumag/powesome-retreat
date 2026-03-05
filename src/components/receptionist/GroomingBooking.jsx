@@ -1,24 +1,40 @@
 import React, { useContext, useState } from "react";
-import { ReportContext } from "../../context/ReportContext";
+import { GroomingContext } from "../../context/GroomingContext"; // ✅ use GroomingContext
 import "./ReceptionistStyles.css";
-
 const GroomingBooking = () => {
-  const { groomingAppointments, setGroomingAppointments } = useContext(ReportContext);
+  const { groomingAppointments, setGroomingAppointments } = useContext(GroomingContext);
 
   const [newAppointment, setNewAppointment] = useState({
-    customer: "", petName: "", petType: "Dog", service: "", date: "", status: "Pending"
+    customer: "",
+    petName: "",
+    petType: "Dog",
+    service: "",
+    date: "",
+    status: "Pending",
+    price: 0
   });
 
   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState({});
 
-  const handleChange = (e) => setNewAppointment({ ...newAppointment, [e.target.name]: e.target.value });
-  const handleEditChange = (e) => setEditData({ ...editData, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setNewAppointment({ ...newAppointment, [e.target.name]: e.target.value });
+
+  const handleEditChange = (e) =>
+    setEditData({ ...editData, [e.target.name]: e.target.value });
 
   const handleCreateAppointment = () => {
     const id = groomingAppointments.length + 1;
     setGroomingAppointments([...groomingAppointments, { id, ...newAppointment }]);
-    setNewAppointment({ customer: "", petName: "", petType: "Dog", service: "", date: "", status: "Pending" });
+    setNewAppointment({
+      customer: "",
+      petName: "",
+      petType: "Dog",
+      service: "",
+      date: "",
+      status: "Pending",
+      price: 0
+    });
   };
 
   const startEdit = (appointment) => {
@@ -27,17 +43,19 @@ const GroomingBooking = () => {
   };
 
   const saveEdit = () => {
-    setGroomingAppointments(groomingAppointments.map(a => a.id === editingId ? editData : a));
+    setGroomingAppointments(
+      groomingAppointments.map((a) => (a.id === editingId ? editData : a))
+    );
     setEditingId(null);
   };
 
   const deleteAppointment = (id) => {
-    setGroomingAppointments(groomingAppointments.filter(a => a.id !== id));
+    setGroomingAppointments(groomingAppointments.filter((a) => a.id !== id));
   };
 
   const updateStatus = (id, newStatus) => {
     setGroomingAppointments(
-      groomingAppointments.map(a =>
+      groomingAppointments.map((a) =>
         a.id === id ? { ...a, status: newStatus } : a
       )
     );
@@ -59,6 +77,7 @@ const GroomingBooking = () => {
           </select>
           <input type="text" name="service" placeholder="Service" value={newAppointment.service} onChange={handleChange} />
           <input type="date" name="date" value={newAppointment.date} onChange={handleChange} />
+          <input type="number" name="price" placeholder="Price (₱)" value={newAppointment.price} onChange={handleChange} />
           <select name="status" value={newAppointment.status} onChange={handleChange}>
             <option value="Pending">Pending (Wait for Approval)</option>
             <option value="Confirmed">Confirmed</option>
@@ -74,11 +93,12 @@ const GroomingBooking = () => {
         <table>
           <thead>
             <tr>
-              <th>ID</th><th>Customer</th><th>Pet</th><th>Type</th><th>Service</th><th>Date</th><th>Status</th><th>Actions</th>
+              <th>ID</th><th>Customer</th><th>Pet</th><th>Type</th>
+              <th>Service</th><th>Date</th><th>Status</th><th>Price</th><th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {groomingAppointments.map(a => (
+            {groomingAppointments.map((a) => (
               <tr key={a.id}>
                 {editingId === a.id ? (
                   <>
@@ -95,11 +115,12 @@ const GroomingBooking = () => {
                     <td><input type="date" name="date" value={editData.date} onChange={handleEditChange} /></td>
                     <td>
                       <select name="status" value={editData.status} onChange={handleEditChange}>
-                        <option value="Pending">Pending (Wait for Approval)</option>
+                        <option value="Pending">Pending</option>
                         <option value="Confirmed">Confirmed</option>
                         <option value="Completed">Completed</option>
                       </select>
                     </td>
+                    <td><input type="number" name="price" value={editData.price} onChange={handleEditChange} /></td>
                     <td>
                       <button onClick={saveEdit}>Save</button>
                       <button onClick={() => setEditingId(null)}>Cancel</button>
@@ -114,6 +135,7 @@ const GroomingBooking = () => {
                     <td>{a.service}</td>
                     <td>{a.date}</td>
                     <td>{a.status}</td>
+                    <td>₱{a.price?.toLocaleString()}</td>
                     <td>
                       <button onClick={() => startEdit(a)}>Edit</button>
                       <button onClick={() => deleteAppointment(a.id)}>Delete</button>

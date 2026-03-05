@@ -1,37 +1,54 @@
-// src/context/POSContext.jsx
-import React, { createContext, useState } from "react";
-import { ReportProvider, ReportContext } from "./ReportContext";
+import React, { createContext, useState, useEffect } from "react";
 
 export const POSContext = createContext();
 
-export const POSProvider = ({ children }) => {
-  const [transactions, setTransactions] = useState([
-    { id: 1, customer: "Sarah Johnson", service: "Hotel Booking", amount: 5000, date: "2026-02-20" },
-    { id: 2, customer: "Tom Baker", service: "Grooming", amount: 1500, date: "2026-02-22" }
+export function POSProvider({ children }) {
+  const [sales, setSales] = useState([
+    {
+      id: 1,
+      customer: "John Doe",
+      item: "Hotel Booking",
+      amount: 1500,
+      date: "2026-03-05",
+      status: "Paid"
+    },
+    {
+      id: 2,
+      customer: "Jane Smith",
+      item: "Grooming Service",
+      amount: 500,
+      date: "2026-03-06",
+      status: "Paid"
+    }
   ]);
 
+  // ✅ Record a new sale
+  const recordSale = (sale) => {
+    setSales((prev) => [...prev, { id: prev.length + 1, ...sale }]);
+  };
+
+  // ✅ Delete a sale
+  const deleteSale = (id) => {
+    setSales((prev) => prev.filter((s) => s.id !== id));
+  };
+
+  // ✅ Load from localStorage
+  useEffect(() => {
+    const stored = localStorage.getItem("sales");
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (parsed.length > 0) setSales(parsed);
+    }
+  }, []);
+
+  // ✅ Save to localStorage
+  useEffect(() => {
+    localStorage.setItem("sales", JSON.stringify(sales));
+  }, [sales]);
+
   return (
-    <ReportProvider>
-      <ReportContext.Consumer>
-        {({ hotelBookings, setHotelBookings, groomingAppointments, setGroomingAppointments, customerProfiles, setCustomerProfiles }) => (
-          <POSContext.Provider
-            value={{
-              transactions,
-              setTransactions,
-              receptionistData: {
-                hotelBookings,
-                setHotelBookings,
-                groomingAppointments,
-                setGroomingAppointments,
-                customerProfiles,
-                setCustomerProfiles
-              }
-            }}
-          >
-            {children}
-          </POSContext.Provider>
-        )}
-      </ReportContext.Consumer>
-    </ReportProvider>
+    <POSContext.Provider value={{ sales, recordSale, deleteSale }}>
+      {children}
+    </POSContext.Provider>
   );
-};
+}
