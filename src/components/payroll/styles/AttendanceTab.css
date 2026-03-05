@@ -6,10 +6,23 @@
   margin-bottom: 20px;
 }
 
+.attendance-form label {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
 .attendance-form input,
 .attendance-form select {
   margin-right: 10px;
   padding: 5px;
+}
+
+.attendance-form small.note {
+  display: block;
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 8px;
 }
 
 .attendance-form button {
@@ -18,15 +31,23 @@
   color: white;
   border: none;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .attendance-form button:hover {
   background-color: #218838;
 }
 
+.preview-label {
+  margin-top: 10px;
+  font-style: italic;
+  color: #333;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 }
 
 thead {

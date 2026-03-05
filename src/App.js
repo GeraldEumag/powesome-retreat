@@ -8,7 +8,7 @@ import { UserProvider } from "./context/UserContext";
 import { HotelProvider } from "./context/HotelContext";
 import { InventoryProvider } from "./context/InventoryContext";
 import { GroomingProvider } from "./context/GroomingContext";
-import { SalesProvider } from "./context/SalesContext"; // ✅ add SalesProvider
+import { SalesProvider } from "./context/SalesContext";
 
 // ✅ Components
 import ProtectedRoute from "./components/ProtectedRoute";

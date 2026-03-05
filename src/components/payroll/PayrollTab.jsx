@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { PayrollContext } from "../../components/payroll/PayrollContext";
 import Payslip from "./Payslip";
-
+import "./styles/PayrollDashboard.css";
 function PayrollTab() {
   const { employees, payrollRuns, runPayroll } = useContext(PayrollContext);
   const [period, setPeriod] = useState("March 2026");

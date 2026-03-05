@@ -1,93 +1,102 @@
 import React, { useContext, useState } from "react";
 import { PayrollContext } from "./PayrollContext";
 import "./styles/EmployeeList.css";
-
+import "./styles/PayrollDashboard.css";
 function EmployeeList() {
-  const { employees, addEmployee, updateEmployee, deleteEmployee } = useContext(PayrollContext);
+  const { employees, setEmployees } = useContext(PayrollContext);
+  const [editingId, setEditingId] = useState(null);
+  const [form, setForm] = useState({ name: "", role: "", baseSalary: 0 });
 
-  const [newEmployee, setNewEmployee] = useState({
-    name: "",
-    position: "",
-    salaryType: "monthly",
-    salary: 0,
-    rate: 0,
-    deductions: 0
-  });
+  // ✅ Delete Employee
+  const handleDelete = (id) => {
+    setEmployees(employees.filter(emp => emp.id !== id));
+  };
 
-  const handleAdd = () => {
-    if (!newEmployee.name || !newEmployee.position) return;
-    addEmployee(newEmployee);
-    setNewEmployee({ name: "", position: "", salaryType: "monthly", salary: 0, rate: 0, deductions: 0 });
+  // ✅ Start Editing
+  const handleEdit = (emp) => {
+    setEditingId(emp.id);
+    setForm({ name: emp.name, role: emp.role || "", baseSalary: emp.baseSalary });
+  };
+
+  // ✅ Save Edit
+  const handleSave = () => {
+    setEmployees(employees.map(emp =>
+      emp.id === editingId ? { ...emp, ...form } : emp
+    ));
+    setEditingId(null);
+    setForm({ name: "", role: "", baseSalary: 0 });
   };
 
   return (
     <section className="employee-list">
-      <h2>Employee Management</h2>
+      <h2>Employee List</h2>
 
-      {/* Add Employee Form */}
-      <div className="employee-form">
-        <input
-          type="text"
-          placeholder="Name"
-          value={newEmployee.name}
-          onChange={(e) => setNewEmployee({ ...newEmployee, name: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Position"
-          value={newEmployee.position}
-          onChange={(e) => setNewEmployee({ ...newEmployee, position: e.target.value })}
-        />
-        <select
-          value={newEmployee.salaryType}
-          onChange={(e) => setNewEmployee({ ...newEmployee, salaryType: e.target.value })}
-        >
-          <option value="monthly">Monthly</option>
-          <option value="hourly">Hourly</option>
-        </select>
-        <input
-          type="number"
-          placeholder="Salary / Rate"
-          value={newEmployee.salaryType === "monthly" ? newEmployee.salary : newEmployee.rate}
-          onChange={(e) =>
-            setNewEmployee(
-              newEmployee.salaryType === "monthly"
-                ? { ...newEmployee, salary: Number(e.target.value) }
-                : { ...newEmployee, rate: Number(e.target.value) }
-            )
-          }
-        />
-        <button onClick={handleAdd}>Add Employee</button>
-      </div>
-
-      {/* Employee Table */}
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Salary Type</th>
-            <th>Salary/Rate</th>
-            <th>Deductions</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {employees.map(emp => (
-            <tr key={emp.id}>
-              <td>{emp.name}</td>
-              <td>{emp.position}</td>
-              <td>{emp.salaryType}</td>
-              <td>{emp.salaryType === "monthly" ? `₱${emp.salary}` : `₱${emp.rate}/hr`}</td>
-              <td>₱{emp.deductions}</td>
-              <td>
-                <button onClick={() => deleteEmployee(emp.id)}>Delete</button>
-                {/* Later: add edit functionality */}
-              </td>
+      {employees.length > 0 ? (
+        <table className="employee-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Base Salary</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {employees.map(emp => (
+              <tr key={emp.id}>
+                <td>
+                  {editingId === emp.id ? (
+                    <input
+                      type="text"
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    />
+                  ) : (
+                    emp.name
+                  )}
+                </td>
+                <td>
+                  {editingId === emp.id ? (
+                    <input
+                      type="text"
+                      value={form.role}
+                      onChange={(e) => setForm({ ...form, role: e.target.value })}
+                    />
+                  ) : (
+                    emp.role || "—"
+                  )}
+                </td>
+                <td>
+                  {editingId === emp.id ? (
+                    <input
+                      type="number"
+                      value={form.baseSalary}
+                      onChange={(e) => setForm({ ...form, baseSalary: Number(e.target.value) })}
+                    />
+                  ) : (
+                    `₱${emp.baseSalary.toLocaleString()}`
+                  )}
+                </td>
+                <td>
+                  {editingId === emp.id ? (
+                    <>
+                      <button onClick={handleSave}>Save</button>
+                      <button onClick={() => setEditingId(null)}>Cancel</button>
+                    </>
+                  ) : (
+                    <>
+                      <button onClick={() => handleEdit(emp)}>Edit</button>
+                      <button onClick={() => handleDelete(emp.id)}>Delete</button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No employees found. Add employees using the Employee Form.</p>
+      )}
     </section>
   );
 }

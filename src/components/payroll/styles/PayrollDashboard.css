@@ -1,0 +1,193 @@
+/* General Payroll Dashboard Layout */
+.payroll-dashboard {
+  padding: 1rem;
+  background-color: var(--dashboard-bg, #f9f9f9);
+  border-radius: 6px;
+}
+
+/* Tabs Navigation */
+.dashboard-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-tabs button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.dashboard-tabs button:hover {
+  background-color: #d0d0d0;
+}
+
+.dashboard-tabs button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Section Headings */
+section h2, section h3, section h4 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+form input, form select, form button {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+table th {
+  background-color: #f0f0f0;
+}
+
+table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Export Buttons */
+.export-buttons {
+  margin-top: 0.5rem;
+}
+
+.export-buttons button {
+  margin-right: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  background-color: #28a745;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.export-buttons button:hover {
+  background-color: #218838;
+}
+
+/* Payslip Card */
+.payslip-card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 6px;
+  background-color: #fff;
+  margin-top: 1rem;
+}
+
+.payslip-card .net-pay {
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Dark Mode Support */
+body.dark-mode .payroll-dashboard {
+  background-color: #222;
+  color: #eee;
+}
+
+body.dark-mode .dashboard-tabs button {
+  background-color: #444;
+  color: #eee;
+}
+
+body.dark-mode .dashboard-tabs button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+body.dark-mode table th {
+  background-color: #333;
+  color: #eee;
+}
+
+body.dark-mode table td {
+  background-color: #444;
+  color: #eee;
+}
+
+/* ✅ Responsive Styles */
+@media (max-width: 768px) {
+  /* Hide tabs by default, show hamburger */
+  .dashboard-tabs {
+    display: none;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+
+  .dashboard-tabs.open {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+  }
+
+  form {
+    flex-direction: column;
+  }
+
+  form input, form select, form button {
+    width: 100%;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .payslip-card {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .hamburger {
+    display: none;
+  }
+}

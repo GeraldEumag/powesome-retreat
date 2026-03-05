@@ -1,0 +1,9 @@
+.attendance-form-section {
+  padding: 1rem;
+}
+
+.attendance-form input,
+.attendance-form select,
+.attendance-form button {
+  margin: 0.5rem;
+}

@@ -1,39 +1,60 @@
-import React, { useContext } from "react";
-import { PayrollContext } from "../../components/payroll/PayrollContext";
-import jsPDF from "jspdf";
+import React, { useContext, useState } from "react";
+import { PayrollContext } from "./PayrollContext";
+import "./styles/Payslip.css";
+import "./styles/PayrollDashboard.css";
+function Payslip() {
+  const { employees, generatePayslip } = useContext(PayrollContext);
 
-function Payslip({ employeeId, period }) {
-  const { generatePayslip } = useContext(PayrollContext);
-  const payslip = generatePayslip(employeeId, period);
+  const [employeeId, setEmployeeId] = useState("");
+  const [period, setPeriod] = useState("");
+  const [payslip, setPayslip] = useState(null);
 
-  if (!payslip) return <p>No payslip found for this period.</p>;
-
-  const exportPDF = () => {
-    const doc = new jsPDF();
-    doc.text(`Payslip for ${payslip.name}`, 10, 10);
-    doc.text(`Period: ${payslip.period}`, 10, 20);
-    doc.text(`Gross Pay: ₱${payslip.grossPay}`, 10, 30);
-    doc.text(`Deductions: ₱${payslip.deductions}`, 10, 40);
-    doc.text(`Benefits: ₱${payslip.benefits}`, 10, 50);
-    doc.text(`Net Pay: ₱${payslip.netPay}`, 10, 60);
-    doc.save(`Payslip_${payslip.name}_${payslip.period}.pdf`);
+  const handleGenerate = () => {
+    if (!employeeId || !period) return;
+    const slip = generatePayslip(employeeId, period);
+    setPayslip(slip);
   };
 
   return (
-    <div className="payslip">
-      <h3>Payslip for {payslip.name}</h3>
-      <p>Period: {payslip.period}</p>
-      <table>
-        <tbody>
-          <tr><td>Gross Pay</td><td>₱{payslip.grossPay.toLocaleString()}</td></tr>
-          <tr><td>Total Deductions</td><td>₱{payslip.deductions.toLocaleString()}</td></tr>
-          <tr><td>Total Benefits</td><td>₱{payslip.benefits.toLocaleString()}</td></tr>
-          <tr><td><strong>Net Pay</strong></td><td><strong>₱{payslip.netPay.toLocaleString()}</strong></td></tr>
-        </tbody>
-      </table>
-      {/* ✅ Export button */}
-      <button onClick={exportPDF}>Export to PDF</button>
-    </div>
+    <section className="payslip-section">
+      <h2>Payslip Generator</h2>
+
+      {/* Payslip Form */}
+      <div className="payslip-form">
+        <select
+          value={employeeId}
+          onChange={(e) => setEmployeeId(e.target.value)}
+        >
+          <option value="">Select Employee</option>
+          {employees.map(emp => (
+            <option key={emp.id} value={emp.id}>{emp.name}</option>
+          ))}
+        </select>
+
+        <input
+          type="text"
+          placeholder="Payroll Period (e.g. Mar 1-15)"
+          value={period}
+          onChange={(e) => setPeriod(e.target.value)}
+        />
+
+        <button onClick={handleGenerate}>Generate Payslip</button>
+      </div>
+
+      {/* Payslip Display */}
+      {payslip ? (
+        <div className="payslip-card">
+          <h3>Payslip for {payslip.name}</h3>
+          <p><strong>Period:</strong> {payslip.period}</p>
+          <p><strong>Gross Pay:</strong> ₱{payslip.grossPay.toLocaleString()}</p>
+          <p><strong>Deductions:</strong> ₱{payslip.deductions.toLocaleString()}</p>
+          <p><strong>Benefits:</strong> ₱{payslip.benefits.toLocaleString()}</p>
+          <p><strong>Net Pay:</strong> <span className="net-pay">₱{payslip.netPay.toLocaleString()}</span></p>
+        </div>
+      ) : (
+        <p>No payslip generated yet. Select employee and period.</p>
+      )}
+    </section>
   );
 }
 

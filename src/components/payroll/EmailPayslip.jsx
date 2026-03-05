@@ -1,58 +1,78 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import { PayrollContext } from "./PayrollContext";
-import "./styles/EmailPayslip.css";
 
-function EmailPayslip() {
+function EmailPayslipForm() {
   const { employees, generatePayslip } = useContext(PayrollContext);
-  const [employeeId, setEmployeeId] = useState("");
-  const [period, setPeriod] = useState("");
-  const [status, setStatus] = useState("");
+  const [selectedEmployee, setSelectedEmployee] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [cycle, setCycle] = useState("monthly");
+  const [previewPeriod, setPreviewPeriod] = useState("");
 
-  const handleSend = async () => {
-    if (!employeeId || !period) return;
-    const payslip = generatePayslip(employeeId, period);
-    if (!payslip) {
-      setStatus("No payslip found for this period.");
-      return;
+  const formatPeriod = (dateStr, cycleType) => {
+    const dateObj = new Date(dateStr);
+    const month = dateObj.toLocaleString("en-US", { month: "short" });
+    const year = dateObj.getFullYear();
+    const day = dateObj.getDate();
+
+    if (cycleType === "monthly") return `${month}-${year}`;
+    if (cycleType === "biweekly") return `${month} ${day <= 15 ? "1-15" : "16-end"}, ${year}`;
+    if (cycleType === "weekly") return `${month} Week ${Math.ceil(day / 7)}, ${year}`;
+    return `${month}-${year}`;
+  };
+
+  const handleDateChange = (e) => {
+    const val = e.target.value;
+    setSelectedDate(val);
+    if (val) setPreviewPeriod(formatPeriod(val, cycle));
+  };
+
+  const handleCycleChange = (e) => {
+    const val = e.target.value;
+    setCycle(val);
+    if (selectedDate) setPreviewPeriod(formatPeriod(selectedDate, val));
+  };
+
+  const handleSend = () => {
+    if (!selectedEmployee || !selectedDate) return;
+    const periodLabel = formatPeriod(selectedDate, cycle);
+    const payslip = generatePayslip(parseInt(selectedEmployee), periodLabel);
+    if (payslip) {
+      alert(`Payslip for ${payslip.name} (${periodLabel}) sent via email!`);
     }
-
-    try {
-      // Example: call backend API to send email
-      const response = await fetch("/api/sendPayslip", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ employeeId, period, payslip }),
-      });
-
-      if (response.ok) {
-        setStatus("Payslip sent successfully!");
-      } else {
-        setStatus("Failed to send payslip.");
-      }
-    } catch (error) {
-      setStatus("Error sending payslip.");
-    }
+    setSelectedDate("");
+    setPreviewPeriod("");
   };
 
   return (
     <section className="email-payslip">
       <h2>Email Payslip</h2>
-      <select value={employeeId} onChange={(e) => setEmployeeId(e.target.value)}>
-        <option value="">Select Employee</option>
-        {employees.map(emp => (
-          <option key={emp.id} value={emp.id}>{emp.name}</option>
-        ))}
-      </select>
-      <input
-        type="text"
-        placeholder="Enter Payroll Period (e.g. Feb 2026)"
-        value={period}
-        onChange={(e) => setPeriod(e.target.value)}
-      />
-      <button onClick={handleSend}>Send Payslip</button>
-      {status && <p className="status">{status}</p>}
+      <div className="payslip-form">
+        <select
+          value={selectedEmployee}
+          onChange={(e) => setSelectedEmployee(e.target.value)}
+        >
+          <option value="">Select Employee</option>
+          {employees.map((emp) => (
+            <option key={emp.id} value={emp.id}>
+              {emp.name}
+            </option>
+          ))}
+        </select>
+        <input type="date" value={selectedDate} onChange={handleDateChange} />
+        <select value={cycle} onChange={handleCycleChange}>
+          <option value="monthly">Monthly</option>
+          <option value="biweekly">Bi-Weekly</option>
+          <option value="weekly">Weekly</option>
+        </select>
+        <button onClick={handleSend}>Send Payslip</button>
+      </div>
+      {previewPeriod && (
+        <p className="preview-label">
+          Payroll Period Preview: <strong>{previewPeriod}</strong>
+        </p>
+      )}
     </section>
   );
 }
 
-export default EmailPayslip;
+export default EmailPayslipForm;

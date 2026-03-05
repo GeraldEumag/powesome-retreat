@@ -1,0 +1,9 @@
+.deductions-tab {
+  padding: 1rem;
+}
+
+.deductions-form input,
+.deductions-form select,
+.deductions-form button {
+  margin: 0.5rem;
+}

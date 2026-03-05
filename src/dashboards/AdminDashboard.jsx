@@ -8,7 +8,7 @@ import UsersTab from "../components/admin/UsersTab";
 import CreateUserTab from "../components/admin/CreateUserTab";
 import ReportsTab from "../components/admin/ReportsTab";
 import LoginHistoryTab from "../components/admin/LoginHistoryTab";
-import PayrollTab from "../components/payroll/PayrollTab";   // ✅ updated path
+import PayrollDashboard from "../components/payroll/PayrollDashboard";  
 import AttendanceTab from "../components/admin/AttendanceTab";
 
 // ✅ Context
@@ -100,7 +100,7 @@ function AdminDashboard() {
       {activeTab === "Reports" && <ReportsTab />}
       {activeTab === "Login History" && <LoginHistoryTab />}
       {activeTab === "Payroll" &&
-        currentUser?.role === "Administrator" && <PayrollTab />}
+        currentUser?.role === "Administrator" && <PayrollDashboard />}
       {activeTab === "Attendance" &&
         currentUser?.role === "Administrator" && <AttendanceTab />}
     </div>

@@ -1,0 +1,9 @@
+.leave-requests {
+  padding: 1rem;
+}
+
+.leave-form input,
+.leave-form select,
+.leave-form button {
+  margin: 0.5rem;
+}
